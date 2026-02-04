@@ -15,11 +15,11 @@ public:
             marks[j] = 0;
         }
     }
-    Student(int mId, string mName, float mMarks[3]){
+    Student(int mId, string mName, float mMarks[]){
         id = mId;
         name = mName;
         for(int j=0;j<3;j++){
-            marks[j] = mark[j];
+            marks[j] = mMarks[j];
         }
     }
     float averageMarks(){
