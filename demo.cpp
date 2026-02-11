@@ -74,7 +74,7 @@ public:
         cout << "Loan Tenure : " << loan_tenure << endl;
         cout << "Monthly EMI: " << calculateEMI() << endl;
     }
-}
+};
 
 
 int main()
