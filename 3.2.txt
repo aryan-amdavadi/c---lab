@@ -1,0 +1,137 @@
+#include <iostream>
+using namespace std;
+
+class BankAccount
+{
+private:
+    int accountNumber;
+    string accountHolder;
+    double balance;
+
+    static int totalAccounts;   // Static data member
+
+public:
+    // Constructor
+    BankAccount(int accNo, string name, double bal)
+    {
+        accountNumber = accNo;
+        accountHolder = name;
+        balance = bal;
+        totalAccounts++;   // Increase count when account is created
+    }
+
+    // Display account details
+    void display()
+    {
+        cout << "\nAccount Number: " << accountNumber;
+        cout << "\nAccount Holder: " << accountHolder;
+        cout << "\nCurrent Balance: " << balance << endl;
+    }
+
+    // Get account number
+    int getAccountNumber()
+    {
+        return accountNumber;
+    }
+
+    // Get balance
+    double getBalance()
+    {
+        return balance;
+    }
+
+    // Deposit function
+    void deposit(double amount)
+    {
+        if (amount > 0)
+        {
+            balance += amount;
+            cout << "\nAmount Deposited Successfully!";
+        }
+        else
+        {
+            cout << "\nInvalid Deposit Amount!";
+        }
+    }
+
+    // Transfer money
+    bool transfer(BankAccount &receiver, double amount)
+    {
+        if (amount <= 0)
+        {
+            cout << "\nInvalid transfer amount!";
+            return false;
+        }
+
+        if (amount > balance)
+        {
+            cout << "\nInsufficient balance!";
+            return false;
+        }
+
+        balance -= amount;
+        receiver.balance += amount;
+
+        cout << "\nTransfer Successful!";
+        return true;
+    }
+
+    // Static function to show total accounts
+    static void showTotalAccounts()
+    {
+        cout << "\nTotal Accounts Created: " << totalAccounts << endl;
+    }
+};
+
+// Initialize static variable
+int BankAccount::totalAccounts = 0;
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of accounts to create: ";
+    cin >> n;
+
+    // Dynamic allocation of accounts
+    BankAccount *accounts[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        int accNo;
+        string name;
+        double bal;
+
+        cout << "\nEnter details for Account " << i + 1 << endl;
+        cout << "Account Number: ";
+        cin >> accNo;
+        cout << "Account Holder Name: ";
+        cin >> name;
+        cout << "Initial Balance: ";
+        cin >> bal;
+
+        accounts[i] = new BankAccount(accNo, name, bal);
+    }
+
+    // Display all accounts
+    cout << "\n--- Account Summaries ---\n";
+    for (int i = 0; i < n; i++)
+    {
+        accounts[i]->display();
+    }
+
+    // Transfer example (between first two accounts if available)
+    if (n >= 2)
+    {
+        double amount;
+        cout << "\nEnter amount to transfer from Account 1 to Account 2: ";
+        cin >> amount;
+
+        accounts[0]->transfer(*accounts[1], amount);
+    }
+
+    // Show total accounts
+    BankAccount::showTotalAccounts();
+
+    return 0;
+}

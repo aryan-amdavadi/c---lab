@@ -72,7 +72,8 @@ int main(){
     {
         E[i].display();
     }
-
+    delete E[];
+    
     return 0;
 }
 
